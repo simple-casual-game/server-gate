@@ -1,0 +1,19 @@
+// This is Proto v3 syntax。
+syntax = "proto3";
+
+package gate;
+
+option go_package = "github.com/simple-casual-game/server-gate/protobuf/gate"; 
+
+//// ClientConnectReq 玩家連線Gate協議
+message ClientConnectReq {
+	string pid = 1; 		//產品
+	string token = 2; 		//加密後玩家資訊
+	string gameType = 3; 	//登入的遊戲類型 ex:FlipCoin
+}
+
+// ClientConnectRes 登入用回包
+message ClientConnectRes {
+	string pid = 1; 				// 使用者產品線
+	string username = 2; 			// 使用者名稱
+};

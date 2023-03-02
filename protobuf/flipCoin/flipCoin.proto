@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package flipCoin;
+
+option go_package = "github.com/simple-casual-game/server-gate/protobuf/flipCoin"; 
+
+// 共通標頭檔
+// 
+// 傳送與接收的前置標頭檔，用以告知後方內容該如何解析。
+message GameMessage {
+	oneof payload {
+		BetReq betReq = 1;
+		BetRes betRes = 2;
+	}
+}
+
+// 玩家請求下注
+message BetReq {
+	string tableid = 1;						// table 資訊
+	string currency = 2;					// 幣種
+	string betamount = 3;					// 下注金額 小數最小只能到0.00000001
+	string uuid = 4; 						// UUID
+}
+
+// 下注回應
+message BetRes {
+	string tableid = 1;						// table 資訊
+	string betamount = 2;					// 下注金額 小數最小只能到0.00000001
+	uint32 code = 3;						// 下注結果
+	uint64 bettime = 4;						// 下注時間
+	string win = 5;							// 派彩
+	string ratio = 6;						// 派彩倍率
+	string res = 7;							// 寶石結果
+	string uuid = 8; 						// UUID
+}
+

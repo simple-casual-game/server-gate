@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package game;
+
+option go_package = "github.com/simple-casual-game/server-gate/protobuf/game"; 
+
+import "flipCoin/flipCoin.proto"; // 遊戲端
+import "gate/gate.proto"; // gate端
+
+// 共通標頭檔
+// 
+// 傳送與接收的前置標頭檔，用以告知後方內容該如何解析。
+message GameMessage {
+	string uuid = 1; // UUID
+	oneof payload {
+
+		//Gate
+		gate.ClientConnectReq clientConnectRequest = 2;
+		gate.ClientConnectRes clientConnectResponse = 3;
+
+		//Gate <-> Game
+		LoginReq loginReq = 4;
+		LoginRes loginRes = 5;
+		
+		//diamonds header
+		flipCoin.GameMessage flipCoinMessage = 2001;
+	}
+}
+
+//// LoginReq Gate登入協議
+message LoginReq {
+	string name = 1;					 // 用戶帳號
+	string productid = 2;				// 用戶產品編號
+	string token = 3;					// 用戶Token
+}
+
+// LoginRes Gate登入協議回包
+message LoginRes {
+	uint32 code = 1;				// 結果
+	string username = 2; 			// 使用者名稱
+	string cryptoCurrency = 3;		// 使用虛擬貨幣
+};
+
